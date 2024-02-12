@@ -115,32 +115,18 @@
                     <h2 class="title is-3">Abstract</h2>
                     <div class="content has-text-justified">
                         <p style="font-size: 125%">
-                          Reward engineering has long been a challenge
-                          in Reinforcement Learning (RL) research, as it
-                          often requires extensive human effort and itera-
-                          tive processes of trial-and-error to design effective
-                          reward functions. In this paper, we propose RL-
-                          VLM-F, a method that automatically generates
-                          reward functions for agents to learn new tasks, us-
-                          ing only a text description of the task goal and the
-                          agent’s visual observations, by leveraging feed-
-                          backs from vision language foundation models
-                          (VLMs). The key to our approach is to query
-                          these models to give preferences over pairs of
-                          the agent’s image observations based on the text
-                          description of the task goal, and then learn a re-
-                          ward function from the preference labels, rather
-                          than directly prompting these models to output
-                          a raw reward score, which can be noisy and in-
-                          consistent. We demonstrate that RL-VLM-F suc-
-                          cessfully produces effective rewards and policies
-                          across various domains — including classic con-
-                          trol, as well as manipulation of rigid, articulated,
-                          and deformable objects — without the need for
-                          human supervision, outperforming prior methods
-                          that use large pretrained models for reward gener-
-                          ation under the same assumptions.
-
+                          Reward engineering has long been a challenge in Reinforcement Learning (RL) research, 
+                          as it often requires extensive human effort and iterative processes of trial-and-error to design effective reward functions. 
+                          In this paper, we propose RL-VLM-F, a method that automatically generates reward functions for agents to learn new tasks, 
+                          using only a text description of the task goal and the agent’s visual observations, 
+                          by leveraging feedbacks from vision language foundation models (VLMs). 
+                          The key to our approach is to query these models to give preferences over pairs of the agent’s image observations based on the text
+                          description of the task goal, and then learn a reward function from the preference labels, 
+                          rather than directly prompting these models to output a raw reward score, 
+                          which can be noisy and inconsistent. 
+                          We demonstrate that RL-VLM-F successfully produces effective rewards and policies across various domains — including classic control, as well as manipulation of rigid, articulated,
+                          and deformable objects — without the need for human supervision, outperforming prior methods
+                          that use large pretrained models for reward generation under the same assumptions.
 <br>
 <br>
 
@@ -160,7 +146,7 @@
                       <h2 class="title is-3"><span class="dvima">RL-VLM-F: Prompts and Policies</span></h2>
                       <p style="font-size: 125%">
                         Below we show the policy rollouts from our method and baselines on seven tasks including rigid, articulated, and deformable object manipulation. 
-                        For each task, we show a short phrase of task goal description, which when combined with a template prompt, forms the full prompt for the VLM. 
+                        For each task, we show a short text description of task goal, which when combined with a template prompt forms the full prompt that we use to query the VLM for preferences. 
                       </p>
                   </div>
               </div>
