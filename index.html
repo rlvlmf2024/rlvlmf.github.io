@@ -5,7 +5,31 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>RL-VLM-F</title>
-
+    <!-- <style>
+      .hover-trigger {
+          position: relative;
+          cursor: pointer;
+      }
+      
+      .hover-trigger:hover .hover-image {
+          display: block;
+      }
+      
+      .hover-image {
+          display: none;
+          position: absolute;
+          left: 100%; /* Position to the right of the trigger text */
+          top: 0;
+          background: #fff;
+          border: 1px solid #ccc;
+          padding: 5px;
+      }
+      
+      /* Adding a border to the hover-trigger for visual clarity */
+      .hover-trigger {
+          border: 1px solid transparent; /* Invisible border to avoid shifting text on hover */
+      }
+    </style> -->
     <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
     <link rel="stylesheet" href="./static/css/bulma.min.css">
@@ -115,15 +139,13 @@
                     <h2 class="title is-3">Abstract</h2>
                     <div class="content has-text-justified">
                         <p style="font-size: 125%">
-                          Reward engineering has long been a challenge in Reinforcement Learning (RL) research, 
-                          as it often requires extensive human effort and iterative processes of trial-and-error to design effective reward functions. 
-                          In this paper, we propose RL-VLM-F, a method that automatically generates reward functions for agents to learn new tasks, 
+                          Reward engineering has long been a challenge in Reinforcement Learning research, 
+                          as it often requires extensive human effort. 
+                          In this paper, we propose <strong>RL-VLM-F</strong>, a method that automatically generates reward functions for agents to learn new tasks, 
                           using only a text description of the task goal and the agent’s visual observations, 
-                          by leveraging feedbacks from vision language foundation models (VLMs). 
-                          The key to our approach is to query these models to give preferences over pairs of the agent’s image observations based on the text
-                          description of the task goal, and then learn a reward function from the preference labels, 
-                          rather than directly prompting these models to output a raw reward score, 
-                          which can be noisy and inconsistent. 
+                          by leveraging feedback from vision language foundation models (VLMs). 
+                          <strong>The key to our approach is to query these models to give preferences over pairs of the agent’s image observations based on the text
+                          description of the task goal, and then learn a reward function from the preference labels.</strong>
                           We demonstrate that RL-VLM-F successfully produces effective rewards and policies across various domains — including classic control, as well as manipulation of rigid, articulated,
                           and deformable objects — without the need for human supervision, outperforming prior methods
                           that use large pretrained models for reward generation under the same assumptions.
@@ -137,6 +159,45 @@
         </div>
     </section>
 
+
+    <section class="section">
+      <div class="container is-max-widescreen">
+          <div class="rows">
+              <div class="rows is-centered ">
+                  <div class="row is-full-width">
+                      <h2 class="title is-3"><span class="dvima">RL-VLM-F Components</span></h2>
+                      <div class="columns is-centered has-text-centered">
+                        <video poster="" id="" autoplay controls loop width="100%" playbackRate=2.0 style="border-radius: 5px;">
+                            <source src="videos/overall_components.mp4" type="video/mp4">
+                        </video>
+                      </div>
+                      <br>
+                      <span style="font-size: 125%"><strong>Overview: </strong>RL-VLM-F automatically generates
+                        reward functions for agents to learn new tasks, using only a text description of the task goal and the
+                        agent’s visual observations, by leveraging feedback from vision language foundation models
+                        (VLMs). The key to our approach is to query
+                        these models to give preferences over pairs of
+                        the agent’s image observations based on the text
+                        description of the task goal, and then learn a reward function from the preference labels. We use Preference-based RL to learn the policy and reward function at the same time. 
+                      </span>
+                      <br>
+                      <br>
+                      <h2 class="title is-4" style="text-align: center;"><span class="dvima">RL-VLM-F Query Design</span></h2>
+                      <img src="imgs/rl-vlm-f_query.jpeg" class="interpolation-image" alt=""
+                      style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" />
+                      <br>
+                      <span style="font-size: 125%"><strong>RL-VLM-F Two-stage query: </strong>We query the VLM in 2 stages: 
+                        First, we query the VLM to generate free-form responses comparing how well each of the two images achieves the task. 
+                        Next, we prompt the VLM with the text responses from the first stage to extract a preference label over the two images.
+                        We use the same query template for all tasks, with <span style="color: red;">[task description]</span> replaced by task-specific goal description. 
+                      </span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+
     <!-- rollout examples of ours and baselines for each task -->
     <section class="section">
       <div class="container is-max-widescreen">
@@ -146,8 +207,13 @@
                       <h2 class="title is-3"><span class="dvima">RL-VLM-F: Prompts and Policies</span></h2>
                       <p style="font-size: 125%">
                         Below we show the policy rollouts from our method and baselines on seven tasks including rigid, articulated, and deformable object manipulation. 
-                        For each task, we show a short text description of task goal, which when combined with a template prompt forms the full prompt that we use to query the VLM for preferences. 
-                      </p>
+                        For each task, we show a short text description of task goal, which, when combined with the template prompt below, forms the full prompt that we use to query the VLM for preferences. 
+                        <!-- <img src="imgs/prompt_template.png"> -->
+                        <br>
+                        <br>
+                        <img src="imgs/prompt_template.png" width="800" height="400" style="display: block; margin-left: auto; margin-right: auto;">
+
+                      </p>           
                   </div>
               </div>
           </div>
@@ -156,7 +222,7 @@
         <div style="margin-bottom: 20px;">
           <h2 style="font-size: 21px; margin-bottom: 10px;">Fold Cloth Diagonally</h2>
           <div>
-            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">"to fold the cloth diagonally from top left corner to bottom right corner"</code></pre>
+            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">task description: "to fold the cloth diagonally from top left corner to bottom right corner"</code></pre>
           </div>
           <br>
           <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
@@ -183,7 +249,7 @@
         <div style="margin-bottom: 20px;">
           <h2 style="font-size: 21px; margin-bottom: 10px;">Straighten Rope</h2>
           <div>
-            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">"to straighten the blue rope"</code></pre>
+            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">task description: "to straighten the blue rope"</code></pre>
           </div>
           <br>
           <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
@@ -210,7 +276,7 @@
         <div style="margin-bottom: 20px;">
           <h2 style="font-size: 21px; margin-bottom: 10px;">Pass Water without Spilling</h2>
           <div>
-            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">"to move the container, which holds water, to be as close to the red circle as possible without causing too many water droplets to spill"</code></pre>
+            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">task description: "to move the container, which holds water, to be as close to the red circle as possible without causing too many water droplets to spill"</code></pre>
           </div>
           <br>
           <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
@@ -237,7 +303,7 @@
         <div style="margin-bottom: 20px;">
           <h2 style="font-size: 21px; margin-bottom: 10px;">Move Soccer Ball into Goal </h2>
           <div>
-            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">"to move the soccer ball into the goal"</code></pre>
+            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">task description: "to move the soccer ball into the goal"</code></pre>
           </div>
           <br>
           <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
@@ -264,7 +330,7 @@
         <div style="margin-bottom: 20px;">
           <h2 style="font-size: 21px; margin-bottom: 10px;">Open Drawer</h2>
           <div>
-            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">"to open the drawer"</code></pre>
+            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">task description: "to open the drawer"</code></pre>
           </div>
           <br>
           <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
@@ -291,7 +357,7 @@
         <div style="margin-bottom: 20px;">
           <h2 style="font-size: 21px; margin-bottom: 10px;">Sweep Cube into Hole</h2>
           <div>
-            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">"to minimize the distance between the green cube and the hole"</code></pre>
+            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">task description: "to minimize the distance between the green cube and the hole"</code></pre>
           </div>
           <br>
           <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
@@ -318,7 +384,7 @@
         <div style="margin-bottom: 20px;">
           <h2 style="font-size: 21px; margin-bottom: 10px;">CartPole</h2>
           <div>
-            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">"to balance the brown pole on the black cart to be upright"</code></pre>
+            <pre class="p-1 scrollable"><code class="language-markdown" id="answer-1">task description: "to balance the brown pole on the black cart to be upright"</code></pre>
           </div>
           <br>
           <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
@@ -344,46 +410,6 @@
       </div>
     </section>
 
-
-    <section class="section">
-        <div class="container is-max-widescreen">
-            <div class="rows">
-                <div class="rows is-centered ">
-                    <div class="row is-full-width">
-                        <h2 class="title is-3"><span class="dvima">RL-VLM-F Components</span></h2>
-                        <div class="columns is-centered has-text-centered">
-                          <video poster="" id="" autoplay controls loop width="100%" playbackRate=2.0 style="border-radius: 5px;">
-                              <source src="videos/overall_components.mp4" type="video/mp4">
-                          </video>
-                        </div>
-                        <br>
-                        <span style="font-size: 125%"><strong>Overview: </strong>RL-VLM-F automatically generates
-                          reward functions for agents to learn new tasks, using only a text description of the task goal and the
-                          agent’s visual observations, by leveraging feedbacks from vision language foundation models
-                          (VLMs). The key to our approach is to query
-                          these models to give preferences over pairs of
-                          the agent’s image observations based on the text
-                          description of the task goal, and then learn a reward function from the preference labels. We use Preference-based RL
-                          method to learn the policy and reward function at the same time. 
-                        </span>
-                        <br>
-                        <br>
-                        <h2 class="title is-4" style="text-align: center;"><span class="dvima">RL-VLM-F Query Design</span></h2>
-                        <img src="imgs/rl-vlm-f_query.jpeg" class="interpolation-image" alt=""
-                        style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" />
-                        <br>
-                        <span style="font-size: 125%"><strong>RL-VLM-F Two-stage query: </strong>We query the VLM in 2 stages: 
-                          First, we query the VLM to generate free-form responses comparing how well each of the two images achieves the task. 
-                          Next, we prompt the VLM with the text responses from the first stage to extract a preference label over the two images.
-                          We use the same query template for all tasks, with <span style="color: red;">[task description]</span> replaced by task-specific goal description. 
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    
     <section class="section">
       <div class="container is-max-widescreen">
           <div class="rows">
@@ -402,7 +428,7 @@
                       style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" />
                       <br>
                       <span style="font-size: 125%"> As shown in the learning curves of all compared methods on 7 tasks, RL-VLM-F outperforms all baselines in all tasks, and matches or surpasses
-                        the performance of GT preference on 6 of the 7 tasks. 
+                        the performance of ground-truth preference on 6 of the 7 tasks. 
                       </span>
                       <br>
                       <br>
@@ -422,7 +448,7 @@
                       <img src="imgs/alignment_w_gt_rew.png" class="interpolation-image" alt=""
                       style="display: block; margin-left: auto; margin-right: auto; max-width: 80%;" />
                       <br>
-                      <span style="font-size: 125%"> We compare how well the learned reward by RL-VLM-F and VLM Score align with the ground-truth task progress on 3
+                      <span style="font-size: 125%"> We compare how well the learned rewards by RL-VLM-F and VLM Score align with the ground-truth task progress on 3
                         MetaWorld tasks along an expert trajectory. As shown, RL-VLM-F generates rewards that align better with the ground-truth task progress.
                         The learned rewards are averaged over 3 trained reward models with different seeds, and the shaded region represents the standard error.
                       </span>
